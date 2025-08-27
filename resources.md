@@ -9,3 +9,13 @@
  - [Toxicity of Microplastics Explorer 2.0](https://sccwrp.shinyapps.io/human_mp_tox_shiny-/)
    - Data source of thousands of studies including: particulate only, human vs mouse, expsore route, endpoints, shape, dose metric etc)
    - Effect vs no effect based on dosage
+  
+## 🌋 Vog Resources
+- Measured in PM 10
+- [Acute health effects associated with exposure to volcanic air pollution (vog) from increased activity at Kilauea Volcano in 2008](https://sci-hub.ru/https://doi.org/10.1080/15287394.2010.497440)
+  - There were statistically significant positive associations between high vog exposure and visits for medically diagnosed cough, headache, acute pharyngitis, and acute airway problems.
+- 
+
+
+## 🌋 Auto Emissions Resources
+- Measured in PM 2.5
