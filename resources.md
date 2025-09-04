@@ -13,6 +13,7 @@
  - [Environmental Microplastic and Nanoplastic: Exposure Routes and Effects on Coagulation and the Cardiovascular System](https://pmc.ncbi.nlm.nih.gov/articles/PMC11098554/)
  - [Non-Negligible Effects of UV Irradiation on Transformation and Environmental Risks of Microplastics in the Water Environment](https://www.mdpi.com/2039-4713/12/1/1)
  - [Aging mechanism of microplastics with UV irradiation and its effects on the adsorption of heavy metals](https://www.sciencedirect.com/science/article/abs/pii/S0304389420305045)
+ - [Data from: Photodegradation modifies microplastic effects on soil properties and plant performance](https://datasetsearch.research.google.com/search?src=0&query=modified%20microplastics&docid=L2cvMTF5Nnlzc2syMA%3D%3D)
   
 ## 🌋 Vog Resources
 - Measured in PM 10
