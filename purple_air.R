@@ -1,6 +1,8 @@
 library(httr)
 library(jsonlite)
 library(dplyr)
+library(mapgl)
+
 
 url <- "https://api.purpleair.com/v1/sensors"
 response <- GET(
@@ -76,6 +78,10 @@ pm_data <- map_dfr(hawaii_sensor_ids, get_latest_pm25_cf1)
 
 # Preview
 print(pm_data)
+
+
+
+
 
 # Save or append to log
 log_file <- "purpleair_pm25cf1_log.csv"
