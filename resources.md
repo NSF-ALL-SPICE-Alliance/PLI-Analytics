@@ -14,6 +14,12 @@
  - [Non-Negligible Effects of UV Irradiation on Transformation and Environmental Risks of Microplastics in the Water Environment](https://www.mdpi.com/2039-4713/12/1/1)
  - [Aging mechanism of microplastics with UV irradiation and its effects on the adsorption of heavy metals](https://www.sciencedirect.com/science/article/abs/pii/S0304389420305045)
  - [Data from: Photodegradation modifies microplastic effects on soil properties and plant performance](https://datasetsearch.research.google.com/search?src=0&query=modified%20microplastics&docid=L2cvMTF5Nnlzc2syMA%3D%3D)
+
+Dataset
+ - [UVA-induced weathering of microplastics in seawater: surface property transformations and kinetics](https://www.frontiersin.org/journals/marine-science/articles/10.3389/fmars.2025.1519668/full#supplementary-material)
+
+ - [Probabilistic Estimation of Airborne Micro- and Nanoplastic Intake in Humans](https://pubs.acs.org/doi/10.1021/acs.est.3c09189)
+   - This work shows that UVA irradiation in natural seawater causes substantial physicochemical aging of microplastics, modifying their morphology, surface chemistry, oxidation state, crystallinity, and additive leaching behavior
   
 ## 🌋 Vog Resources
 - Measured in PM 10
