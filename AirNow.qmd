@@ -1,0 +1,149 @@
+---
+title: "AirNow"
+format: html
+editor: visual
+---
+
+## AirNow PM2.5 Hawaii
+
+```{r}
+library(httr)
+library(jsonlite)
+library(dplyr)
+library(airnow) 
+library(arrow)
+
+```
+
+```{r}
+write_feather(pm25_hawaii_all, "pm25_hawaii_all.feather")
+```
+
+Trying to Access API Key with Oahu data sensors
+
+```{r}
+# Set up API key and endpoint
+api_key <- "BB821E52-E813-430E-8B7B-4E4A214866D9"
+base_url <- "https://www.airnowapi.org/aq/observation/latLong/current/"
+
+# Set parameters for Honolulu
+params <- list(
+  format = "application/json",
+  latitude = 21.3069,    # Honolulu latitude
+  longitude = -157.8583, # Honolulu longitude
+  distance = 25,         # miles
+  API_KEY = api_key
+)
+
+response <- GET(url = base_url, query = params)
+
+airnow_data <- fromJSON(content(response, "text"), flatten = TRUE)
+
+print(airnow_data)
+```
+
+Trying to Access API key with all of Hawaii sensors; filtering for PM25
+
+```{r}
+# Set up API key and endpoint
+api_key <- "BB821E52-E813-430E-8B7B-4E4A214866D9"
+base_url <- "https://www.airnowapi.org/aq/observation/latLong/current/"
+
+# Set parameters for Honolulu again but look to change to entire state
+params <- list(
+  format = "application/json",
+  latitude = 21.3069,
+  longitude = -157.8583,
+  distance = 25,
+  API_KEY = api_key
+)
+
+response <- GET(url = base_url, query = params)
+
+airnow_data <- fromJSON(content(response, "text"), flatten = TRUE)
+
+# Filter for PM2.5 observations only
+pm25_data <- subset(airnow_data, ParameterName == "PM2.5")
+
+# Display only SiteName, Latitude, Longitude, AQI, and PM2.5 concentration
+pm25_summary <- pm25_data[c("StateCode", "Latitude", "Longitude", "AQI", "ParameterName", "ReportingArea", "DateObserved", "Value", "Unit")]
+print(pm25_summary)
+
+```
+
+```{r}
+print(names(airnow_data))
+```
+
+```{r}
+#https://aqs.epa.gov/aqsweb/airdata/download_files.html#AQI
+
+#pm25_2025 <- read.csv("C:\\Users\\takaz\\OneDrive\\Documents\\PLI-Analytics\\daily_88101_2025.csv")
+
+#pm25_hawaii_2025 <- subset(pm25_2025, State.Name == "Hawaii")
+```
+
+```{r}
+# Read in csv's call through past ten years
+years <- 2015:2025
+prefix <- "C:/Users/takaz/OneDrive/Documents/PLI-Analytics/daily_88101_"
+
+hawaii_list <- list()
+
+for (yr in years) {
+  file_path <- paste0(prefix, yr, ".csv")
+  # Read the CSV for the year
+  temp <- read.csv(file_path)
+  # Subset for Hawaii only
+  temp_hi <- subset(temp, State.Name == "Hawaii")
+  # Add to list
+  hawaii_list[[as.character(yr)]] <- temp_hi
+}
+
+# Combine all years together into one dataframe
+pm25_hawaii_all <- do.call(rbind, hawaii_list)
+
+head(pm25_hawaii_all)
+```
+
+```{r}
+#Break up pm25_hawaii_all by counties
+county <- c("Hawaii", "Honolulu", "Kauai", "Maui")
+
+# Create a named list of dataframes, one per county to better organize
+county_data <- lapply(county, function(county) {
+  subset(pm25_hawaii_all, County.Name == county)
+})
+
+# Name by county
+names(county_data) <- county
+
+head(county_data$Maui)
+```
+
+```{r}
+library(ggplot2)
+# Summarize daily average PM2.5 per county
+library(dplyr)
+pm25_county_trend <- pm25_hawaii_all %>%
+  group_by(Date.Local, County.Name) %>%
+  summarize(mean_pm25 = mean(Arithmetic.Mean, na.rm = TRUE))
+
+ggplot(pm25_county_trend, aes(x = as.Date(Date.Local), y = mean_pm25, color = County.Name)) +
+  geom_line() +
+  labs(title = "Daily PM2.5 Trends by County (2015–2025)", x = "Date", y = "Mean PM2.5")
+
+```
+
+```{r}
+pm25_yearly <- pm25_hawaii_all %>%
+  mutate(Year = as.numeric(format(as.Date(Date.Local), "%Y"))) %>%
+  group_by(Year, County.Name) %>%
+  summarize(mean_pm25 = mean(Arithmetic.Mean, na.rm = TRUE))
+
+ggplot(pm25_yearly, aes(x = Year, y = County.Name, fill = mean_pm25)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(title = "Yearly Mean PM2.5 by County", x = "Year", y = "County")
+
+```
